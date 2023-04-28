@@ -1,5 +1,7 @@
 const titleText = 'RSS Virtual Keyboard';
 const subtitleText = 'Oksana Moor, 2023';
+const infoOSText = 'The keyboard is created in the Windows OS';
+const infoLangCombinationText = 'Language switch combination: left shift + alt';
 const keysCount = 64;
 
 const body = document.querySelector('body');
@@ -83,10 +85,20 @@ const renderKeyboard = function(data) {
         })
     }
 
+    const infoOS = document.createElement('p');
+    infoOS.className = 'additional-info';
+    infoOS.textContent = infoOSText;
+
+    const infoLangCombination = document.createElement('p');
+    infoLangCombination.className = 'additional-info';
+    infoLangCombination.textContent = infoLangCombinationText;
+
     keyboardWrap.appendChild(title);
     keyboardWrap.appendChild(subtitle);
     keyboardWrap.appendChild(textarea);
     keyboardWrap.appendChild(keyboard);
+    keyboardWrap.appendChild(infoOS);
+    keyboardWrap.appendChild(infoLangCombination);
 
     body.appendChild(keyboardWrap);
 }
