@@ -61,7 +61,7 @@
     {"en": {"text": "Ctrl", "text-shift": "Ctrl", "text-caps": "Ctrl"}, "ru": {"text": "Ctrl", "text-shift": "Ctrl", "text-caps": "Ctrl"}, "keyCode": "17", "data-id": "55", "class": "key service-key"},
     {"en": {"text": "Win", "text-shift": "Win", "text-caps": "Win"}, "ru": {"text": "Win", "text-shift": "Win", "text-caps": "Win"}, "keyCode": "91", "data-id": "56", "class": "key service-key"},
     {"en": {"text": "Alt", "text-shift": "Alt", "text-caps": "Alt"}, "ru": {"text": "Alt", "text-shift": "Alt", "text-caps": "Alt"}, "keyCode": "18", "data-id": "57", "class": "key service-key"},
-    {"en": {"text": "", "text-shift": "", "text-caps": ""}, "ru": {"text": "", "text-shift": "", "text-caps": ""}, "keyCode": "32", "data-id": "58", "class": "key space-key"},
+    {"en": {"text": " ", "text-shift": " ", "text-caps": " "}, "ru": {"text": " ", "text-shift": " ", "text-caps": " "}, "keyCode": "32", "data-id": "58", "class": "key space-key"},
     {"en": {"text": "Alt", "text-shift": "Alt", "text-caps": "Alt"}, "ru": {"text": "Alt", "text-shift": "Alt", "text-caps": "Alt"}, "keyCode": "18", "data-id": "59", "class": "key service-key"},
     {"en": {"text": "◄", "text-shift": "◄", "text-caps": "◄"}, "ru": {"text": "◄", "text-shift": "◄", "text-caps": "◄"}, "keyCode": "37", "data-id": "60", "class": "key service-key"},
     {"en": {"text": "▼", "text-shift": "▼", "text-caps": "▼"}, "ru": {"text": "▼", "text-shift": "▼", "text-caps": "▼"}, "keyCode": "40", "data-id": "61", "class": "key service-key"},

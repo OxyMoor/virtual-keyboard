@@ -1,3 +1,10 @@
+const titleText = 'RSS Virtual Keyboard';
+const subtitleText = 'Oksana Moor, 2023';
+const keysCount = 64;
+
+const body = document.querySelector('body');
+let language = 'en';
+
 const getKeysInfo = async function() {
     const result = await fetch('./keys-info.json');
 
@@ -8,31 +15,24 @@ const getKeysInfo = async function() {
     return result.json();
 }
 
-const keysCount = 64;
-const body = document.querySelector('body');
-let language = 'en';
+const keyboardWrap = document.createElement('div');
+keyboardWrap.className = 'keyboard-wrap';
 
-const titleText = 'RSS Virtual Keyboard';
-const subtitleText = 'Oksana Moor, 2023';
+const title = document.createElement('h1');
+title.className = 'title';
+title.textContent = titleText;
+
+const subtitle = document.createElement('h2');
+subtitle.className = 'subtitle';
+subtitle.textContent = subtitleText;
+
+const textarea = document.createElement('textarea');
+textarea.className = 'textarea';
+
+const keyboard = document.createElement('div');
+keyboard.className = 'keyboard';
 
 const renderKeyboard = function(data) {
-    const keyboardWrap = document.createElement('div');
-    keyboardWrap.className = 'keyboard-wrap';
-
-    const title = document.createElement('h1');
-    title.className = 'title';
-    title.textContent = titleText;
-
-    const subtitle = document.createElement('h2');
-    subtitle.className = 'subtitle';
-    subtitle.textContent = subtitleText;
-
-    const textarea = document.createElement('textarea');
-    textarea.className = 'textarea';
-
-    const keyboard = document.createElement('div');
-    keyboard.className = 'keyboard';
-
     for (let i = 0; i < keysCount; i++) {
         let key = document.createElement('button');
         key.className = data[i]['class'];
@@ -77,6 +77,10 @@ const renderKeyboard = function(data) {
         key.appendChild(en);
 
         keyboard.appendChild(key);
+
+        key.addEventListener('click', () => {
+            enterDataToTextarea(event, data)
+        })
     }
 
     keyboardWrap.appendChild(title);
@@ -88,3 +92,8 @@ const renderKeyboard = function(data) {
 }
 
 getKeysInfo().then(renderKeyboard);
+
+const enterDataToTextarea = (event, info) => {
+    let textToEnter = info[event.currentTarget.dataset.id][language]['text'];
+    textarea.textContent += textToEnter;
+}
