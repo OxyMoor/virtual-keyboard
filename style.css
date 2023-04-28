@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.keyboard-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 715px;
+    margin: 0 auto;
+    padding: 20px 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+    text-align: center;
+    color: #014730;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #04754f;
+}
+
+.textarea {
+    width: 100%;
+    height: 220px;
+    margin-bottom: 15px;
+}
+
+.keyboard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    column-gap: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #222222;
+    border-radius: 5px;
+    background: #888888;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    color: #FFFFFF;
+    background: #444444;
+    border: none;
+    border-radius: 3px;
+    transition: background 0.1s ease-in;
+}
+
+.hidden {
+    display: none;
+}
+
+.key:hover {
+    background: #23dd9f;
+}
+
+.service-key {
+    background: #222222;
+}
+
+.medium-key {
+    width: 85px;
+}
+
+.large-key {
+    width: 100px;
+}
+
+.tab-key {
+    width: 50px;
+}
+
+.del-key {
+    width: 45px;
+}
+
+.space-key {
+    width: 330px;
+}
+
+.additional-info {
+    font-size: 20px;
+    text-align: center;
+    color: #2b2b2b;
+}
