@@ -7,6 +7,8 @@ const keysCount = 64;
 const body = document.querySelector('body');
 let language = 'en';
 
+let cursorPosition = null;
+
 const getKeysInfo = async function() {
     const result = await fetch('./keys-info.json');
 
@@ -81,8 +83,8 @@ const renderKeyboard = function(data) {
         keyboard.appendChild(key);
 
         key.addEventListener('click', () => {
-            enterDataToTextarea(event, data)
-        })
+            enterDataToTextarea(event, data);
+        });
     }
 
     const infoOS = document.createElement('p');
@@ -106,6 +108,70 @@ const renderKeyboard = function(data) {
 getKeysInfo().then(renderKeyboard);
 
 const enterDataToTextarea = (event, info) => {
-    let textToEnter = info[event.currentTarget.dataset.id][language]['text'];
-    textarea.textContent += textToEnter;
+    if (info[event.currentTarget.dataset.id]['keyCode'] === '8') { // backspace
+        let string = textarea.value;
+
+        if (cursorPosition > 0) {
+            textarea.value = string.slice(0, cursorPosition - 1) + string.slice(cursorPosition);
+            cursorPosition--;
+        }
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '46') { // del
+        let string = textarea.value;
+
+        if (cursorPosition < string.length) {
+            textarea.value = string.slice(0, cursorPosition) + string.slice(cursorPosition + 1);
+        }
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '9') { // tab
+        textarea.value += '\t';
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '13') { // enter
+        textarea.value += '\n';
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '20') { // caps
+        textarea.value += '';
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '16') { // shift
+        textarea.value += '';
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '17') { // ctrl
+        textarea.value += '';
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '18') { // alt
+        textarea.value += '';
+    } else if (info[event.currentTarget.dataset.id]['keyCode'] === '91') { // win
+        textarea.value += '';
+    }
+    else {
+        let string = textarea.value;
+        let textToEnter = info[event.currentTarget.dataset.id][language]['text']; // letters and digits
+
+        textarea.value = string.slice(0, cursorPosition) + textToEnter + string.slice(cursorPosition);
+        cursorPosition++;
+    }
 }
+
+const getCursorPosition = function(input){
+    if (document.selection){
+        let range = document.selection.createRange();
+        range.moveStart('textedit', -1);
+        cursorPosition = range.text.length;
+    } else {
+        cursorPosition = input.selectionStart;
+    }
+
+    return cursorPosition;
+}
+
+textarea.addEventListener('click', () => {
+    console.log('click');
+    getCursorPosition(textarea);
+});
+textarea.addEventListener('keyup', () => {
+    console.log('keyup');
+    console.log(textarea.value);
+    getCursorPosition(textarea);
+});
+textarea.addEventListener('change', () => {
+    console.log('change');
+    getCursorPosition(textarea);
+});
+
+textarea.addEventListener('input', () => {
+    console.log('input');
+    getCursorPosition(textarea);
+});
