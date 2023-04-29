@@ -41,6 +41,7 @@ const renderKeyboard = function(data) {
         let key = document.createElement('button');
         key.className = data[i]['class'];
         key.setAttribute('data-id', data[i]['data-id']);
+        key.setAttribute('data-keyCode', data[i]['keyCode']);
         
 
         let ru = document.createElement('div');
@@ -85,6 +86,12 @@ const renderKeyboard = function(data) {
         key.addEventListener('click', () => {
             enterDataToTextarea(event, data);
         });
+        key.addEventListener('mousedown', () => {
+            key.classList.add('pressed');
+        });
+        key.addEventListener('mouseup', () => {
+            key.classList.remove('pressed');
+        });
     }
 
     const infoOS = document.createElement('p');
@@ -122,7 +129,10 @@ const enterDataToTextarea = (event, info) => {
             textarea.value = string.slice(0, cursorPosition) + string.slice(cursorPosition + 1);
         }
     } else if (info[event.currentTarget.dataset.id]['keyCode'] === '9') { // tab
-        textarea.value += '\t';
+        let string = textarea.value;
+
+        textarea.value = string.slice(0, cursorPosition) + '\t' + string.slice(cursorPosition);
+        cursorPosition++;
     } else if (info[event.currentTarget.dataset.id]['keyCode'] === '13') { // enter
         textarea.value += '\n';
     } else if (info[event.currentTarget.dataset.id]['keyCode'] === '20') { // caps
@@ -158,20 +168,39 @@ const getCursorPosition = function(input){
 }
 
 textarea.addEventListener('click', () => {
-    console.log('click');
     getCursorPosition(textarea);
 });
 textarea.addEventListener('keyup', () => {
-    console.log('keyup');
-    console.log(textarea.value);
     getCursorPosition(textarea);
 });
 textarea.addEventListener('change', () => {
-    console.log('change');
+    getCursorPosition(textarea);
+});
+textarea.addEventListener('input', () => {
     getCursorPosition(textarea);
 });
 
-textarea.addEventListener('input', () => {
-    console.log('input');
-    getCursorPosition(textarea);
+const getPressedKey = function(kc, c) {
+    if ((kc === 16 || kc === 17 || kc === 18) && c.includes('Left')) {
+        return document.querySelectorAll('[data-keyCode="' + kc + '"]')[0];
+    } else if ((kc === 16 || kc === 17 || kc === 18) && c.includes('Right')) {
+        return document.querySelectorAll('[data-keyCode="' + kc + '"]')[1];
+    } else {
+        return document.querySelector('[data-keyCode="' + kc + '"]');
+    }
+}
+
+document.addEventListener('keydown', (event) => {
+    let keyCode = event.keyCode;
+    let code = event.code;
+
+    let pressedKey = getPressedKey(keyCode, code);
+    pressedKey.classList.add('pressed');
+});
+document.addEventListener('keyup', (event) => {
+    let keyCode = event.keyCode;
+    let code = event.code;
+    
+    let pressedKey = getPressedKey(keyCode, code);
+    pressedKey.classList.remove('pressed');
 });

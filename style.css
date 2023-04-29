@@ -54,7 +54,7 @@
     background: #444444;
     border: none;
     border-radius: 3px;
-    transition: background 0.1s ease-in;
+    transition: background, border-radius 0.1s ease-in;
 }
 
 .hidden {
@@ -63,6 +63,11 @@
 
 .key:hover {
     background: #23dd9f;
+}
+
+.key.pressed {
+    background: #13df50;
+    border-radius: 50%;
 }
 
 .service-key {
@@ -87,6 +92,14 @@
 
 .space-key {
     width: 330px;
+}
+
+.space-key.pressed,
+.medium-key.pressed,
+.large-key.pressed,
+.tab-key.pressed,
+.del-key.pressed {
+    border-radius: 20px;
 }
 
 .additional-info {
