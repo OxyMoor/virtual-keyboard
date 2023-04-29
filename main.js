@@ -17,7 +17,7 @@ const getKeysInfo = async function() {
     }
 
     return result.json();
-}
+};
 
 const keyboardWrap = document.createElement('div');
 keyboardWrap.className = 'keyboard-wrap';
@@ -36,52 +36,84 @@ textarea.className = 'textarea';
 const keyboard = document.createElement('div');
 keyboard.className = 'keyboard';
 
+let keys = [];
+
+for (let i = 0; i < keysCount; i++) {
+    let key = document.createElement('button');
+
+    let ru = document.createElement('div');
+    ru.className = 'ru';
+
+    let en = document.createElement('div');
+    en.className = 'en'; 
+
+    let textRu = document.createElement('span');
+    textRu.className = 'text';
+
+    let shiftTextRu = document.createElement('span');
+    shiftTextRu.className = 'shift-text hidden'; 
+
+    let CapsTextRu = document.createElement('span');
+    CapsTextRu.className = 'caps-text hidden'; 
+
+    let textEn = document.createElement('span');
+    textEn.className = 'text'; 
+
+    let shiftTextEn = document.createElement('span');
+    shiftTextEn.className = 'shift-text hidden'; 
+
+    let CapsTextEn = document.createElement('span');
+    CapsTextEn.className = 'caps-text hidden'; 
+
+    ru.appendChild(textRu);
+    ru.appendChild(shiftTextRu);
+    ru.appendChild(CapsTextRu);
+    
+    en.appendChild(textEn);
+    en.appendChild(shiftTextEn);
+    en.appendChild(CapsTextEn);
+
+    key.appendChild(ru);
+    key.appendChild(en);
+
+    keyboard.appendChild(key);
+
+    keys.push(key);
+}
+
+const infoOS = document.createElement('p');
+const infoLangCombination = document.createElement('p');
+
+keyboardWrap.appendChild(title);
+keyboardWrap.appendChild(subtitle);
+keyboardWrap.appendChild(textarea);
+keyboardWrap.appendChild(keyboard);
+keyboardWrap.appendChild(infoOS);
+keyboardWrap.appendChild(infoLangCombination);
+
+body.appendChild(keyboardWrap);
+
 const renderKeyboard = function(data) {
-    for (let i = 0; i < keysCount; i++) {
-        let key = document.createElement('button');
+    keys.forEach((key, i, array) => {
         key.className = data[i]['class'];
         key.setAttribute('data-id', data[i]['data-id']);
         key.setAttribute('data-keyCode', data[i]['keyCode']);
         
+        if (language === 'en') {
+            key.querySelector('.ru').classList.add('hidden');
+            key.querySelector('.en').classList.remove('hidden');
+        } else if (language === 'ru') {
+            key.querySelector('.en').classList.add('hidden');
+            key.querySelector('.ru').classList.remove('hidden');
+        }
 
-        let ru = document.createElement('div');
-        ru.className = 'ru hidden';
+        key.querySelector('.ru').querySelector('.text').textContent = data[i]['ru']['text'];
+        key.querySelector('.ru').querySelector('.shift-text').textContent = data[i]['ru']['text-shift'];
+        key.querySelector('.ru').querySelector('.caps-text').textContent = data[i]['ru']['text-caps'];
 
-        let en = document.createElement('div');
-        en.className = 'en'; 
-
-        let textRu = document.createElement('span');
-        textRu.className = 'text';
-        textRu.textContent = data[i]['ru']['text'];
-        let shiftTextRu = document.createElement('span');
-        shiftTextRu.className = 'shift-text hidden'; 
-        shiftTextRu.textContent = data[i]['ru']['text-shift'];
-        let CapsTextRu = document.createElement('span');
-        CapsTextRu.className = 'caps-text hidden'; 
-        shiftTextRu.textContent = data[i]['ru']['text-caps'];
-
-        let textEn = document.createElement('span');
-        textEn.className = 'text'; 
-        textEn.textContent = data[i]['en']['text'];
-        let shiftTextEn = document.createElement('span');
-        shiftTextEn.className = 'shift-text hidden'; 
-        shiftTextEn.textContent = data[i]['en']['text-shift'];
-        let CapsTextEn = document.createElement('span');
-        CapsTextEn.className = 'caps-text hidden'; 
-        shiftTextEn.textContent = data[i]['en']['text-caps'];
-
-        ru.appendChild(textRu);
-        ru.appendChild(shiftTextRu);
-        ru.appendChild(CapsTextRu);
-
-        en.appendChild(textEn);
-        en.appendChild(shiftTextEn);
-        en.appendChild(CapsTextEn);
-
-        key.appendChild(ru);
-        key.appendChild(en);
-
-        keyboard.appendChild(key);
+        key.querySelector('.en').querySelector('.text').textContent = data[i]['en']['text'];
+        key.querySelector('.en').querySelector('.shift-text').textContent = data[i]['en']['text-shift'];
+        key.querySelector('.en').querySelector('.caps-text').textContent = data[i]['en']['text-caps'];
 
         key.addEventListener('click', () => {
             enterDataToTextarea(event, data);
@@ -92,25 +124,14 @@ const renderKeyboard = function(data) {
         key.addEventListener('mouseup', () => {
             key.classList.remove('pressed');
         });
-    }
+    });
 
-    const infoOS = document.createElement('p');
     infoOS.className = 'additional-info';
     infoOS.textContent = infoOSText;
 
-    const infoLangCombination = document.createElement('p');
     infoLangCombination.className = 'additional-info';
     infoLangCombination.textContent = infoLangCombinationText;
-
-    keyboardWrap.appendChild(title);
-    keyboardWrap.appendChild(subtitle);
-    keyboardWrap.appendChild(textarea);
-    keyboardWrap.appendChild(keyboard);
-    keyboardWrap.appendChild(infoOS);
-    keyboardWrap.appendChild(infoLangCombination);
-
-    body.appendChild(keyboardWrap);
-}
+};
 
 getKeysInfo().then(renderKeyboard);
 
@@ -153,10 +174,10 @@ const enterDataToTextarea = (event, info) => {
         textarea.value = string.slice(0, cursorPosition) + textToEnter + string.slice(cursorPosition);
         cursorPosition++;
     }
-}
+};
 
 const getCursorPosition = function(input){
-    if (document.selection){
+    if (document.selection) {
         let range = document.selection.createRange();
         range.moveStart('textedit', -1);
         cursorPosition = range.text.length;
@@ -165,7 +186,7 @@ const getCursorPosition = function(input){
     }
 
     return cursorPosition;
-}
+};
 
 textarea.addEventListener('click', () => {
     getCursorPosition(textarea);
@@ -188,7 +209,7 @@ const getPressedKey = function(kc, c) {
     } else {
         return document.querySelector('[data-keyCode="' + kc + '"]');
     }
-}
+};
 
 document.addEventListener('keydown', (event) => {
     let keyCode = event.keyCode;
@@ -211,6 +232,10 @@ document.addEventListener('keydown', (event) => {
             
             textarea.value = string.slice(0, cursorPosition) + pressedKeyText + string.slice(cursorPosition);
         });
+    } else if (keyCode === 91 || keyCode === 17 || keyCode === 18) {
+        event.preventDefault();
+    } else if (keyCode === 16 && keyCode === 18) {
+        console.log('lang');
     }
 
     let pressedKey = getPressedKey(keyCode, code);
@@ -225,3 +250,35 @@ document.addEventListener('keyup', (event) => {
     let pressedKey = getPressedKey(keyCode, code);
     pressedKey.classList.remove('pressed');
 });
+
+const pressTwoKeys = function(f, ...codes) {
+    let pressed = new Set();
+    document.addEventListener('keydown', function(event) {
+        pressed.add(event.keyCode);
+        
+        for (let code of codes) {
+            if (!pressed.has(code)) {
+                return;
+            }
+        }
+        
+        pressed.clear();
+        
+        f();
+    });
+    document.addEventListener('keyup', function(event) {
+        pressed.delete(event.keyCode);
+    });
+};
+
+const changeLanguage = function() {
+    if (language === 'en') {
+        language = 'ru';
+    } else if (language === 'ru') {
+        language = 'en';
+    }
+    
+    getKeysInfo().then(renderKeyboard);
+};
+
+pressTwoKeys(changeLanguage, 16, 18);
