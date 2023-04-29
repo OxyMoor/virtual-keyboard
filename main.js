@@ -201,6 +201,16 @@ document.addEventListener('keydown', (event) => {
 
         textarea.value = string.slice(0, cursorPosition) + '\t' + string.slice(cursorPosition);
         cursorPosition++;
+    } else if (keyCode === 37 || keyCode === 38 || keyCode === 39 || keyCode === 40) {
+        event.preventDefault();
+        
+        let string = textarea.value;
+        let pressedKeyText;
+        getKeysInfo().then(data=> {
+            pressedKeyText = data[getPressedKey(keyCode, code).dataset.id][language]['text'];
+            
+            textarea.value = string.slice(0, cursorPosition) + pressedKeyText + string.slice(cursorPosition);
+        });
     }
 
     let pressedKey = getPressedKey(keyCode, code);
