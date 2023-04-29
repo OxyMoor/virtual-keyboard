@@ -32,6 +32,10 @@
     color: #2b2b2b;
 }
 
+.textarea:focus {
+    outline: none;
+}
+
 .keyboard {
     display: flex;
     align-items: center;
@@ -54,7 +58,8 @@
     background: #444444;
     border: none;
     border-radius: 3px;
-    transition: background, border-radius 0.1s ease-in;
+    cursor: pointer;
+    transition: background 0.2s ease-in, border-radius 0.2s ease-in;
 }
 
 .hidden {

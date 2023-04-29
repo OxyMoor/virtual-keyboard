@@ -194,8 +194,19 @@ document.addEventListener('keydown', (event) => {
     let keyCode = event.keyCode;
     let code = event.code;
 
+    if (keyCode === 9) {
+        event.preventDefault();
+
+        let string = textarea.value;
+
+        textarea.value = string.slice(0, cursorPosition) + '\t' + string.slice(cursorPosition);
+        cursorPosition++;
+    }
+
     let pressedKey = getPressedKey(keyCode, code);
     pressedKey.classList.add('pressed');
+
+    textarea.focus();
 });
 document.addEventListener('keyup', (event) => {
     let keyCode = event.keyCode;
