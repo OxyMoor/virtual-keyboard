@@ -30,7 +30,7 @@
     {"en": {"text": "\\", "text-shift": "|", "text-caps": "\\"}, "ru": {"text": "\\", "text-shift": "/", "text-caps": "\\"}, "keyCode": "220", "data-id": "27", "class": "key"},
     {"en": {"text": "Del", "text-shift": "Del", "text-caps": "Del"}, "ru": {"text": "Del", "text-shift": "", "text-caps": "Del"}, "keyCode": "46", "data-id": "28", "class": "key service-key del-key"},
     
-    {"en": {"text": "CapsLock", "text-shift": "CapsLock", "text-caps": "CapsLock"}, "ru": {"text": "CapsLock", "text-shift": "", "text-caps": ""}, "keyCode": "20", "data-id": "29", "class": "key service-key large-key"},
+    {"en": {"text": "CapsLock", "text-shift": "CapsLock", "text-caps": "CapsLock"}, "ru": {"text": "CapsLock", "text-shift": "CapsLock", "text-caps": "CapsLock"}, "keyCode": "20", "data-id": "29", "class": "key service-key large-key"},
     {"en": {"text": "a", "text-shift": "A", "text-caps": "A"}, "ru": {"text": "ф", "text-shift": "Ф", "text-caps": "Ф"}, "keyCode": "65", "data-id": "30", "class": "key"},
     {"en": {"text": "s", "text-shift": "S", "text-caps": "S"}, "ru": {"text": "ы", "text-shift": "Ы", "text-caps": "Ы"}, "keyCode": "83", "data-id": "31", "class": "key"},
     {"en": {"text": "d", "text-shift": "D", "text-caps": "D"}, "ru": {"text": "в", "text-shift": "В", "text-caps": "В"}, "keyCode": "68", "data-id": "32", "class": "key"},

@@ -9,6 +9,8 @@ let language = 'en';
 
 let cursorPosition = null;
 
+let isCaps = false;
+
 const getKeysInfo = async function() {
     const result = await fetch('./keys-info.json');
 
@@ -119,10 +121,16 @@ const renderKeyboard = function(data) {
             enterDataToTextarea(event, data);
         });
         key.addEventListener('mousedown', () => {
-            key.classList.add('pressed');
+            if (key.dataset.keycode === '20') {
+                key.classList.toggle('pressed');
+            } else {
+                key.classList.add('pressed');
+            }
         });
         key.addEventListener('mouseup', () => {
-            key.classList.remove('pressed');
+            if (key.dataset.keycode !== '20') {
+                key.classList.remove('pressed');
+            }
         });
     });
 
@@ -234,12 +242,17 @@ document.addEventListener('keydown', (event) => {
         });
     } else if (keyCode === 91 || keyCode === 17 || keyCode === 18) {
         event.preventDefault();
-    } else if (keyCode === 16 && keyCode === 18) {
+    } else if (keyCode === 16 && keyCode === 18) { // change lang!!!!!!
         console.log('lang');
     }
-
+    
     let pressedKey = getPressedKey(keyCode, code);
-    pressedKey.classList.add('pressed');
+
+    if (pressedKey.dataset.keycode === '20') {
+        pressedKey.classList.toggle('pressed');
+    } else {
+        pressedKey.classList.add('pressed');
+    } 
 
     textarea.focus();
 });
@@ -248,7 +261,10 @@ document.addEventListener('keyup', (event) => {
     let code = event.code;
     
     let pressedKey = getPressedKey(keyCode, code);
-    pressedKey.classList.remove('pressed');
+
+    if (pressedKey.dataset.keycode !== '20') {
+        pressedKey.classList.remove('pressed');
+    }
 });
 
 const pressTwoKeys = function(f, ...codes) {
