@@ -21,6 +21,18 @@ const getKeysInfo = async function() {
     return result.json();
 };
 
+function setLocalStorage() {
+    localStorage.setItem('lang', language);
+}
+
+function getLocalStorage() {
+    if (localStorage.getItem('lang')) {
+        language = localStorage.getItem('lang');
+    } 
+}
+
+getLocalStorage();
+
 const keyboardWrap = document.createElement('div');
 keyboardWrap.className = 'keyboard-wrap';
 
@@ -318,6 +330,7 @@ const changeLanguage = function() {
         language = 'en';
     }
     
+    setLocalStorage();
     getKeysInfo().then(renderKeyboard);
 };
 
