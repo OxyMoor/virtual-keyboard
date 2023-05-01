@@ -3,6 +3,7 @@ const subtitleText = 'Oksana Moor, 2023';
 const infoOSText = 'The keyboard is created in the Windows OS';
 const infoLangCombinationText = 'Language switch combination: left shift + alt';
 const keysCount = 64;
+const forbiddenKeys = [27, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 145, 144, 19, 111, 106, 109, 36, 37, 38, 33, 107, 12, 39, 35, 40, 34, 45, 46];
 
 const body = document.querySelector('body');
 let language = 'en';
@@ -256,6 +257,10 @@ document.addEventListener('keydown', (event) => {
     let keyCode = event.keyCode;
     let code = event.code;
 
+    if (forbiddenKeys.includes(keyCode)) {
+        return;
+    }
+
     if (keyCode === 9) {
         event.preventDefault();
 
@@ -296,6 +301,10 @@ document.addEventListener('keyup', (event) => {
     let keyCode = event.keyCode;
     let code = event.code;
     
+    if (forbiddenKeys.includes(keyCode)) {
+        return;
+    }
+
     let pressedKey = getPressedKey(keyCode, code);
 
     if (pressedKey.dataset.keycode !== '20') {
