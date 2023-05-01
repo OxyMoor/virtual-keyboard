@@ -95,6 +95,18 @@ keyboardWrap.appendChild(infoLangCombination);
 
 body.appendChild(keyboardWrap);
 
+const toggleCapsText = function(arr) {
+    arr.forEach(el => {
+        let capsText = el.querySelector('.' + language).querySelector('.caps-text');
+        capsText.classList.toggle('hidden');
+
+        let text = el.querySelector('.' + language).querySelector('.text');
+        text.classList.toggle('hidden');
+    });
+
+    isCaps = !isCaps;
+}
+
 const renderKeyboard = function(data) {
     keys.forEach((key, i, array) => {
         key.className = data[i]['class'];
@@ -123,6 +135,8 @@ const renderKeyboard = function(data) {
         key.addEventListener('mousedown', () => {
             if (key.dataset.keycode === '20') {
                 key.classList.toggle('pressed');
+
+                toggleCapsText(keys);
             } else {
                 key.classList.add('pressed');
             }
@@ -176,6 +190,13 @@ const enterDataToTextarea = (event, info) => {
         textarea.value += '';
     }
     else {
+        // let keyText;
+        // if (!isCaps) {
+        //     keyText = 'text';
+        // } else {
+        //     keyText = 'text-caps';
+        // }
+
         let string = textarea.value;
         let textToEnter = info[event.currentTarget.dataset.id][language]['text']; // letters and digits
 
@@ -242,20 +263,23 @@ document.addEventListener('keydown', (event) => {
         });
     } else if (keyCode === 91 || keyCode === 17 || keyCode === 18) {
         event.preventDefault();
-    } else if (keyCode === 16 && keyCode === 18) { // change lang!!!!!!
-        console.log('lang');
-    }
+    } 
     
     let pressedKey = getPressedKey(keyCode, code);
 
     if (pressedKey.dataset.keycode === '20') {
         pressedKey.classList.toggle('pressed');
+
+        toggleCapsText(keys);
     } else {
         pressedKey.classList.add('pressed');
     } 
 
-    textarea.focus();
+    if (keyCode !== 16 && keyCode !== 17 && keyCode !== 18 && keyCode !== 20 && keyCode !== 91) {
+        textarea.focus();
+    }
 });
+
 document.addEventListener('keyup', (event) => {
     let keyCode = event.keyCode;
     let code = event.code;
